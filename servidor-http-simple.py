@@ -25,12 +25,18 @@ mySocket.listen(5)
 # Accept connections, read incoming data, and answer back an HTML page
 #  (in an infinite loop)
 
-while True:
-    print 'Waiting for connections'
-    (recvSocket, address) = mySocket.accept()
-    print 'HTTP request received:'
-    print recvSocket.recv(1024)
-    recvSocket.send("HTTP/1.1 200 OK\r\n\r\n" +
-                    "<html><body><h1>Hello World!</h1></body></html>" +
-                    "\r\n")
-    recvSocket.close()
+try:
+    while True:
+        print 'Waiting for connections'
+        (recvSocket, address) = mySocket.accept()
+        IP = address[0]
+        Puerto = address[1] 
+        print 'HTTP request received:'
+        print recvSocket.recv(1024)
+        recvSocket.send("HTTP/1.1 200 OK\r\n\r\n" +
+                       "<html><body><h1>"+"Hola!, Eres la IP: " + str(IP)+" ,en el puerto: "+ str(Puerto)+ "</h1></body></html>" +
+                       "\r\n")
+        recvSocket.close()
+except KeyboardInterrupt:
+    print "Servidor interrumpido"
+    mySocket.close()
